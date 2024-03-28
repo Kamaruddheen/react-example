@@ -1,16 +1,18 @@
 import React from "react";
 import Welcome from "./Components/Welcome";
-import logo from "./logo.svg";
+import BorderWrapper from "./Components/BorderWrapper";
 import "./App.css";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <Welcome program={"Full Stack"} name="Alex" />
+    <>    
+      <BorderWrapper color="red">
         <Welcome program={"Data Science"} name="Max" />
-      </header>
-    </div>
+      </BorderWrapper>
+      <BorderWrapper color="green">
+        <Welcome program={"Full Stack"} name="Alex" />
+      </BorderWrapper>
+    </>
   );
 }
 
