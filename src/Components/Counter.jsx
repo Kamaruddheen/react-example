@@ -11,15 +11,39 @@ export default class Counter extends Component {
         // this.decreaseCount = this.decreaseCount.bind(this)
     }
 
-    increaseCount = () => {
+    static getDerivedStateFromProps(props) {
+        console.log("getDerivedStateFromProps : ", props);
+        return props
+    }
+
+    shouldComponentUpdate() {
+        console.log("shouldComponentUpdate");
+        // true - UI should render
+        // false - UI should not render
+        return true
+    }
+
+    componentDidMount() {
+        console.log("componentDidMount");
+    }
+
+    componentDidUpdate() {
+        console.log("componentDidUpdate");
+    }
+
+    componentWillUnmount() {
+        console.log("componentWillUnmount");
+    }
+
+    increaseCount = (step) => {
         this.setState({
-            count: this.state.count + 1
+            count: this.state.count + step
         })
     }
 
-    decreaseCount = () => {
+    decreaseCount = (step) => {
         this.setState({
-            count: this.state.count - 1
+            count: this.state.count - step
         })
     }
 
@@ -27,8 +51,10 @@ export default class Counter extends Component {
         return (
             <>
                 <h1>Counter - {this.state.count}</h1>
-                <button onClick={this.increaseCount}>Add</button>
-                <button onClick={this.decreaseCount}>Subract</button>
+                <button onClick={() => this.increaseCount(1)}>Add by 1</button>
+                <button onClick={() => this.increaseCount(5)}>Add by 5</button>
+                <button onClick={() => this.decreaseCount(1)}>Subract by 1</button>
+                <button onClick={() => this.decreaseCount(5)}>Subract by 5</button>
             </>
         )
     }

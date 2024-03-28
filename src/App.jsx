@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import Welcome from "./Components/Welcome";
 import BorderWrapper from "./Components/BorderWrapper";
 import "./App.css";
 import Counter from "./Components/Counter";
 
 function App() {
+  const [isCounterVisible, setVisible] = useState(true)
   return (
     <>    
       {/* <BorderWrapper color="red">
@@ -14,7 +15,8 @@ function App() {
         <Welcome program={"Full Stack"} name="Alex" />
       </BorderWrapper> */}
 
-      <Counter></Counter>
+      {isCounterVisible && <Counter />}
+      <button onClick={() => setVisible(!isCounterVisible)}>hide/show</button>
     </>
   );
 }
