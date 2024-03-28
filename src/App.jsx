@@ -3,9 +3,10 @@ import Welcome from "./Components/Welcome";
 import BorderWrapper from "./Components/BorderWrapper";
 import "./App.css";
 import Counter from "./Components/Counter";
+import CounterHooks from "./Components/CounterHooks";
 
 function App() {
-  const [isCounterVisible, setVisible] = useState(true)
+  // const [isCounterVisible, setVisible] = useState(true)
   return (
     <>    
       {/* <BorderWrapper color="red">
@@ -15,8 +16,10 @@ function App() {
         <Welcome program={"Full Stack"} name="Alex" />
       </BorderWrapper> */}
 
-      {isCounterVisible && <Counter />}
-      <button onClick={() => setVisible(!isCounterVisible)}>hide/show</button>
+      {/* {isCounterVisible && <Counter />} */}
+      {/* <button onClick={() => setVisible(!isCounterVisible)}>hide/show</button> */}
+      <Counter />
+      <CounterHooks />
     </>
   );
 }
