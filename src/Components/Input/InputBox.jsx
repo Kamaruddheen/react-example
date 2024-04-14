@@ -1,3 +1,6 @@
+import Display from "./Display";
+import Search from "./Search";
+
 const { Component } = require("react");
 
 
@@ -47,17 +50,10 @@ class InputBox extends Component {
         console.log(filteredPersons);
 
         return <div>
-            <input type="text" name="search" id="search" placeholder="Enter a name"
-                onChange={ onSearchChange }
-            />
+
+            <Search  className="search" placeholder="Enter a name" onChangeHandler={ onSearchChange }/>
             
-            {
-                filteredPersons.map((person) => {
-                    return <h1 key={person.id}>
-                        { person.name }
-                    </h1>
-                })
-            }
+            <Display filteredPersons={filteredPersons}></Display>
         </div>;
     }
 }

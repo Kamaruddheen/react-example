@@ -4,7 +4,7 @@ import BorderWrapper from "./Components/BorderWrapper";
 import "./App.css";
 import Counter from "./Components/Counter";
 import CounterHooks from "./Components/CounterHooks";
-import InputBox from "./Components/InputBox";
+import InputBox from "./Components/Input/InputBox";
 
 function App() {
   // const [isCounterVisible, setVisible] = useState(true)
