@@ -4,6 +4,7 @@ import BorderWrapper from "./Components/BorderWrapper";
 import "./App.css";
 import Counter from "./Components/Counter";
 import CounterHooks from "./Components/CounterHooks";
+import InputBox from "./Components/InputBox";
 
 function App() {
   // const [isCounterVisible, setVisible] = useState(true)
@@ -18,8 +19,10 @@ function App() {
 
       {/* {isCounterVisible && <Counter />} */}
       {/* <button onClick={() => setVisible(!isCounterVisible)}>hide/show</button> */}
-      <Counter />
-      <CounterHooks />
+      {/* <Counter /> */}
+      {/* <CounterHooks /> */}
+
+      <InputBox />
     </>
   );
 }
