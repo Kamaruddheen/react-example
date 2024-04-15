@@ -5,6 +5,7 @@ import "./App.css";
 import Counter from "./Components/Counter";
 import CounterHooks from "./Components/CounterHooks";
 import InputBox from "./Components/Input/InputBox";
+import InputHooks from "./Components/InputHooks/InputHooks";
 
 function App() {
   // const [isCounterVisible, setVisible] = useState(true)
@@ -22,7 +23,8 @@ function App() {
       {/* <Counter /> */}
       {/* <CounterHooks /> */}
 
-      <InputBox />
+      {/* <InputBox /> */}
+      <InputHooks /> {/* function based approach with Hooks */}
     </>
   );
 }
