@@ -1,4 +1,9 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  UNSAFE_useScrollRestoration,
+} from "react-router-dom";
 
 import Welcome from "./Components/Basics/Welcome";
 import BorderWrapper from "./Components/Basics/BorderWrapper";
@@ -10,7 +15,12 @@ import CategoryLink from "./Components/CategoryLink";
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter
+      future={{
+        v7_startTransition: true,
+        v7_relativeSplatPath: true,
+      }}
+    >
       <div className="min-h-screen bg-gray-100">
         <Routes>
           <Route
