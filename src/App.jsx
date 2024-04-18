@@ -1,17 +1,13 @@
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  UNSAFE_useScrollRestoration,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { routes, categories } from "./config/routes";
+import CategoryLink from "./Components/CategoryLink";
 
 import Welcome from "./Components/Basics/Welcome";
 import BorderWrapper from "./Components/Basics/BorderWrapper";
 import Counter from "./Components/Basics/Counter";
 import CounterHooks from "./Components/Basics/CounterHooks";
 import InputBox from "./Components/Basics/Input/InputBox";
-import { routes, categories } from "./config/routes";
-import CategoryLink from "./Components/CategoryLink";
+import Calculator from "./Components/Examples/Calculator/Calculator";
 
 function App() {
   return (
@@ -95,6 +91,8 @@ function getRouteElement(path) {
       return <CounterHooks />;
     case "/searching":
       return <InputBox />;
+    case "/calculator":
+      return <Calculator />;
     default:
       return null;
   }
