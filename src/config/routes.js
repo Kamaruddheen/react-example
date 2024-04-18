@@ -38,16 +38,16 @@ export const routes = [
 ];
 
 export const categories = {
+  examples: {
+    name: "Practice Projects",
+    color: "cyan",
+  },
   basics: {
     name: "Fundamentals",
-    color: "blue",
+    color: "green",
   },
   advanced: {
     name: "Advanced Concepts",
     color: "purple",
-  },
-  examples: {
-    name: "Example Projects",
-    color: "green",
   },
 };

@@ -5,4 +5,10 @@ export default {
     extend: {},
   },
   plugins: [],
+  safelist: [
+    {
+      pattern: /border-(blue|purple|green|cyan)-(500|700)/,
+      variants: ["hover"],
+    },
+  ],
 };

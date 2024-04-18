@@ -1,20 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const colorMap = {
-  blue: {
-    border: "border-blue-500",
-    hoverBorder: "hover:border-blue-700",
-  },
-  purple: {
-    border: "border-purple-500",
-    hoverBorder: "hover:border-purple-700",
-  },
-  // Add more colors as needed
+// Get colors from categories configuration
+import { categories } from "../config/routes";
+
+const generateColorMap = () => {
+  return Object.values(categories).reduce((acc, category) => {
+    const { color } = category;
+    acc[color] = {
+      border: `border-${color}-500`,
+      hoverBorder: `hover:border-${color}-700`,
+    };
+    return acc;
+  }, {});
 };
 
+const colorMap = generateColorMap();
+
 function CategoryLink({ to, title, description, color }) {
-  const colorClasses = colorMap[color] || colorMap.blue; // fallback to blue if color not found
+  const colorClasses = colorMap[color] || colorMap.blue; // fallback to blue
 
   return (
     <Link
