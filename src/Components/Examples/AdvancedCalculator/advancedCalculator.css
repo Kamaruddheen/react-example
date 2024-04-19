@@ -1,9 +1,9 @@
 .advanced-calculator-container {
-  @apply max-w-md mx-auto bg-gray-800 p-4 rounded-lg shadow-lg flex flex-col gap-4;
+  @apply max-w-5xl mx-auto bg-gray-800 p-4 rounded-lg shadow-lg flex flex-row gap-4;
 }
 
 .calculator-main {
-  @apply w-full;
+  @apply w-96;
 }
 
 .calculator-display {
@@ -47,7 +47,7 @@
 }
 
 .calculator-history {
-  @apply bg-gray-700 p-4 rounded mt-4;
+  @apply bg-gray-700 p-4 rounded flex-1;
 }
 
 .history-title {
@@ -55,7 +55,7 @@
 }
 
 .history-list {
-  @apply space-y-2 max-h-40 overflow-y-auto;
+  @apply space-y-2 max-h-[500px] overflow-y-auto;
 }
 
 .history-item {

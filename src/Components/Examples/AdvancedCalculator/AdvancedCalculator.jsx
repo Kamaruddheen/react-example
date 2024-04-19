@@ -7,7 +7,7 @@ class AdvancedCalculator extends Component {
     expression: "",
     memory: 0,
     isNewNumber: true,
-    showHistory: false,
+    showHistory: true,
     history: [],
   };
 
