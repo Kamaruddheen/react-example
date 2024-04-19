@@ -2,12 +2,18 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { routes, categories } from "./config/routes";
 import CategoryLink from "./Components/CategoryLink";
 
+// Basics Concepts
 import Welcome from "./Components/Basics/Welcome";
-import BorderWrapper from "./Components/Basics/BorderWrapper";
 import Counter from "./Components/Basics/Counter";
 import CounterHooks from "./Components/Basics/CounterHooks";
 import InputBox from "./Components/Basics/Input/InputBox";
+
+// Advanced Concepts
+import BorderWrapper from "./Components/Basics/BorderWrapper";
+
+// Practice Projects
 import Calculator from "./Components/Examples/Calculator/Calculator";
+import AdvancedCalculator from "./Components/Examples/AdvancedCalculator/AdvancedCalculator";
 
 function App() {
   return (
@@ -93,6 +99,8 @@ function getRouteElement(path) {
       return <InputBox />;
     case "/calculator":
       return <Calculator />;
+    case "/advanced-calculator":
+      return <AdvancedCalculator />;
     default:
       return null;
   }

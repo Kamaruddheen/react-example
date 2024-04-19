@@ -35,6 +35,12 @@ export const routes = [
     description: "Simple Calculator Implementation",
     category: "examples",
   },
+  {
+    path: "/advanced-calculator",
+    title: "Advanced Calculator",
+    description: "Scientific Calculator with Advanced Operations",
+    category: "examples",
+  },
 ];
 
 export const categories = {
