@@ -8,39 +8,39 @@ const RandomQuoteGenerator = () => {
   });
 
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const dummyQuotes = [
-    {
-      text: "Be yourself; everyone else is already taken.",
-      author: "Oscar Wilde",
-    },
-    {
-      text: "Two things are infinite: the universe and human stupidity; and I'm not sure about the universe.",
-      author: "Albert Einstein",
-    },
-    {
-      text: "Be the change that you wish to see in the world.",
-      author: "Mahatma Gandhi",
-    },
-  ];
-
-  const getRandomQuote = () => {
+  const getRandomQuote = async () => {
     setIsLoading(true);
-    const randomIndex = Math.floor(Math.random() * dummyQuotes.length);
+    setError(null);
 
-    // Simulate API call with setTimeout
-    setTimeout(() => {
-      setQuote(dummyQuotes[randomIndex]);
+    try {
+      const response = await fetch("/zenquotes/random");
+      const [data] = await response.json();
+
+      setQuote({
+        text: data.q,
+        author: data.a,
+      });
+    } catch (err) {
+      setError("Failed to fetch quote. Please try again.");
+    } finally {
       setIsLoading(false);
-    }, 500);
+    }
   };
 
   return (
     <div className="quote-container">
       <h2 className="quote-title">Random Quote Generator</h2>
       <div className="quote-box">
-        <p className="quote-text">&quot;{quote.text}&quot;</p>
-        <p className="quote-author">- {quote.author}</p>
+        {error ? (
+          <p className="error-message">{error}</p>
+        ) : (
+          <>
+            <p className="quote-text">"{quote.text}"</p>
+            <p className="quote-author">- {quote.author}</p>
+          </>
+        )}
       </div>
       <button
         className="generate-button"
