@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FaRegCopy } from "react-icons/fa";
 import "./RandomQuoteGenerator.css";
 
 const RandomQuoteGenerator = () => {
@@ -29,6 +30,13 @@ const RandomQuoteGenerator = () => {
     }
   };
 
+  const copyToClipboard = () => {
+    const textToCopy = `"${quote.text}" - ${quote.author}`;
+    navigator.clipboard.writeText(textToCopy).catch((err) => {
+      console.error("Failed to copy text: ", err);
+    });
+  };
+
   return (
     <div className="quote-container">
       <h2 className="quote-title">Random Quote Generator</h2>
@@ -39,6 +47,9 @@ const RandomQuoteGenerator = () => {
           <>
             <p className="quote-text">"{quote.text}"</p>
             <p className="quote-author">- {quote.author}</p>
+            <button className="copy-icon" onClick={copyToClipboard}>
+              <FaRegCopy size={18} className="mr-1 mt-1" />
+            </button>
           </>
         )}
       </div>
