@@ -1,0 +1,25 @@
+.quote-container {
+  @apply max-w-2xl mx-auto bg-gray-800 p-8 rounded-lg shadow-lg;
+}
+
+.quote-title {
+  @apply text-3xl font-bold text-white mb-8 text-center;
+}
+
+.quote-box {
+  @apply bg-gray-700 p-6 rounded-lg mb-6;
+}
+
+.quote-text {
+  @apply text-xl text-white mb-4 italic;
+}
+
+.quote-author {
+  @apply text-right text-gray-300 font-semibold;
+}
+
+.generate-button {
+  @apply w-full bg-purple-600 text-white py-3 px-6 rounded-lg 
+    hover:bg-purple-500 transition-colors duration-200
+    disabled:bg-gray-500 disabled:cursor-not-allowed;
+}

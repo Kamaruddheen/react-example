@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import "./RandomQuoteGenerator.css";
+import "./RandomQuoteGenerator.css";
 
 const RandomQuoteGenerator = () => {
   const [quote, setQuote] = useState({
@@ -37,9 +37,9 @@ const RandomQuoteGenerator = () => {
 
   return (
     <div className="quote-container">
-      <h2>Random Quote Generator</h2>
+      <h2 className="quote-title">Random Quote Generator</h2>
       <div className="quote-box">
-        <p className="quote-text">{quote.text}</p>
+        <p className="quote-text">&quot;{quote.text}&quot;</p>
         <p className="quote-author">- {quote.author}</p>
       </div>
       <button
