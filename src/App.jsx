@@ -14,6 +14,7 @@ import BorderWrapper from "./Components/Basics/BorderWrapper";
 // Practice Projects
 import Calculator from "./Components/Examples/Calculator/Calculator";
 import AdvancedCalculator from "./Components/Examples/AdvancedCalculator/AdvancedCalculator";
+import RandomQuoteGenerator from "./Components/Examples/RandomQuoteGenerator/RandomQuoteGenerator";
 
 function App() {
   return (
@@ -101,6 +102,8 @@ function getRouteElement(path) {
       return <Calculator />;
     case "/advanced-calculator":
       return <AdvancedCalculator />;
+    case "/random-quote":
+      return <RandomQuoteGenerator />;
     default:
       return null;
   }

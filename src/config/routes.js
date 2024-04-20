@@ -41,6 +41,12 @@ export const routes = [
     description: "Scientific Calculator with Advanced Operations",
     category: "examples",
   },
+  {
+    path: "/random-quote",
+    title: "Quote Generator",
+    description: "Random Quote Generator with API",
+    category: "examples",
+  },
 ];
 
 export const categories = {
