@@ -47,6 +47,12 @@ export const routes = [
     description: "Random Quote Generator with API",
     category: "examples",
   },
+  {
+    path: "/tip-calculator",
+    title: "Tip Calculator",
+    description: "Calculate tips easily",
+    category: "examples",
+  },
 ];
 
 export const categories = {

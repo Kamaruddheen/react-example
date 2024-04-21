@@ -15,6 +15,7 @@ import BorderWrapper from "./Components/Basics/BorderWrapper";
 import Calculator from "./Components/Examples/Calculator/Calculator";
 import AdvancedCalculator from "./Components/Examples/AdvancedCalculator/AdvancedCalculator";
 import RandomQuoteGenerator from "./Components/Examples/RandomQuoteGenerator/RandomQuoteGenerator";
+import TipCalculator from "./Components/Examples/TipCalculator/TipCalculator";
 
 function App() {
   return (
@@ -104,6 +105,8 @@ function getRouteElement(path) {
       return <AdvancedCalculator />;
     case "/random-quote":
       return <RandomQuoteGenerator />;
+    case "/tip-calculator":
+      return <TipCalculator />;
     default:
       return null;
   }
