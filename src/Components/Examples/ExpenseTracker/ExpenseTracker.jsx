@@ -20,31 +20,43 @@ const ExpenseTracker = () => {
   };
 
   return (
-    <div>
-      <h2>Expense Tracker</h2>
-      <div>
+    <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
+      <h2 className="text-2xl font-bold mb-4 text-center">Expense Tracker</h2>
+      <div className="mb-4">
         <input
           type="text"
           placeholder="Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          className="w-full mt-1 p-2 border rounded"
         />
+      </div>
+      <div className="mb-4">
         <input
           type="number"
           placeholder="Amount"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
+          className="w-full mt-1 p-2 border rounded"
         />
-        <button onClick={addExpense}>Add Expense</button>
       </div>
-      <ul>
+      <button
+        onClick={addExpense}
+        className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-colors"
+      >
+        Add Expense
+      </button>
+      <ul className="mt-4">
         {expenses.map((expense, index) => (
-          <li key={index}>
-            {expense.description}: ${expense.amount.toFixed(2)}
+          <li key={index} className="flex justify-between py-2 border-b">
+            <span>{expense.description}</span>
+            <span>${expense.amount.toFixed(2)}</span>
           </li>
         ))}
       </ul>
-      <h3>Total Expenses: ${getTotalExpenses()}</h3>
+      <h3 className="text-xl font-semibold mt-4">
+        Total Expenses: ${getTotalExpenses()}
+      </h3>
     </div>
   );
 };
