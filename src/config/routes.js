@@ -53,6 +53,12 @@ export const routes = [
     description: "Calculate tips easily",
     category: "examples",
   },
+  {
+    path: "/expense-tracker",
+    title: "Expense Tracker",
+    description: "Track your expenses easily",
+    category: "examples",
+  },
 ];
 
 export const categories = {

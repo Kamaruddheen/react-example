@@ -16,6 +16,7 @@ import Calculator from "./Components/Examples/Calculator/Calculator";
 import AdvancedCalculator from "./Components/Examples/AdvancedCalculator/AdvancedCalculator";
 import RandomQuoteGenerator from "./Components/Examples/RandomQuoteGenerator/RandomQuoteGenerator";
 import TipCalculator from "./Components/Examples/TipCalculator/TipCalculator";
+import ExpenseTracker from "./Components/Examples/ExpenseTracker/ExpenseTracker";
 
 function App() {
   return (
@@ -107,6 +108,8 @@ function getRouteElement(path) {
       return <RandomQuoteGenerator />;
     case "/tip-calculator":
       return <TipCalculator />;
+    case "/expense-tracker":
+      return <ExpenseTracker />;
     default:
       return null;
   }
