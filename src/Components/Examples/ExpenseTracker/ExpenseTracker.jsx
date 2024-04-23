@@ -13,6 +13,12 @@ const ExpenseTracker = () => {
     }
   };
 
+  const getTotalExpenses = () => {
+    return expenses
+      .reduce((total, expense) => total + expense.amount, 0)
+      .toFixed(2);
+  };
+
   return (
     <div>
       <h2>Expense Tracker</h2>
@@ -38,6 +44,7 @@ const ExpenseTracker = () => {
           </li>
         ))}
       </ul>
+      <h3>Total Expenses: ${getTotalExpenses()}</h3>
     </div>
   );
 };
