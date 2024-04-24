@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./Flashcards.css";
 
 const Flashcards = () => {
   const [cards, setCards] = useState([
