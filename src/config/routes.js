@@ -59,6 +59,12 @@ export const routes = [
     description: "Track your expenses easily",
     category: "examples",
   },
+  {
+    path: "/flashcards",
+    title: "Flashcards",
+    description: "Interactive Learning Flashcards",
+    category: "examples",
+  },
 ];
 
 export const categories = {
