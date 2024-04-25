@@ -1,38 +1,9 @@
 import React, { useState } from "react";
+import { CATEGORIES, initialCards } from "./cardData";
 import "./Flashcards.css";
 
-const CATEGORIES = {
-  react: "React",
-  javascript: "JavaScript",
-  css: "CSS",
-  html: "HTML",
-};
-
 const Flashcards = () => {
-  const [cards, setCards] = useState([
-    {
-      id: 1,
-      question: "What is React?",
-      answer: "A JavaScript library for building user interfaces",
-      category: "react",
-      isFlipped: false,
-    },
-    {
-      id: 2,
-      question: "What is JSX?",
-      answer:
-        "A syntax extension for JavaScript that allows you to write HTML-like code",
-      category: "react",
-      isFlipped: false,
-    },
-    {
-      id: 3,
-      question: "What is JavaScript?",
-      answer: "A programming language that enables interactive web pages",
-      category: "javascript",
-      isFlipped: false,
-    },
-  ]);
+  const [cards, setCards] = useState(initialCards);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showForm, setShowForm] = useState(false);
