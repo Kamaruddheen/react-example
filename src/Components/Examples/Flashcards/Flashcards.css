@@ -92,3 +92,20 @@
   @apply w-full bg-purple-600 text-white py-2 px-4 rounded-lg
     hover:bg-purple-500 transition-colors duration-200;
 }
+
+.category-filter {
+  @apply mb-6;
+}
+
+.category-select {
+  @apply w-full bg-gray-700 text-white p-2 rounded-lg
+    border border-gray-600 focus:border-purple-500 focus:outline-none;
+}
+
+.category-tag {
+  @apply absolute top-4 left-4 bg-purple-600 text-white text-sm px-2 py-1 rounded;
+}
+
+.no-cards {
+  @apply text-white text-center py-12 bg-gray-700 rounded-lg;
+}

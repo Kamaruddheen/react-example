@@ -1,12 +1,20 @@
 import React, { useState } from "react";
 import "./Flashcards.css";
 
+const CATEGORIES = {
+  react: "React",
+  javascript: "JavaScript",
+  css: "CSS",
+  html: "HTML",
+};
+
 const Flashcards = () => {
   const [cards, setCards] = useState([
     {
       id: 1,
       question: "What is React?",
       answer: "A JavaScript library for building user interfaces",
+      category: "react",
       isFlipped: false,
     },
     {
@@ -14,38 +22,31 @@ const Flashcards = () => {
       question: "What is JSX?",
       answer:
         "A syntax extension for JavaScript that allows you to write HTML-like code",
+      category: "react",
       isFlipped: false,
     },
     {
       id: 3,
-      question: "What is a Component?",
-      answer: "An independent, reusable piece of the user interface",
+      question: "What is JavaScript?",
+      answer: "A programming language that enables interactive web pages",
+      category: "javascript",
       isFlipped: false,
     },
   ]);
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showForm, setShowForm] = useState(false);
-  const [newCard, setNewCard] = useState({ question: "", answer: "" });
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [newCard, setNewCard] = useState({
+    question: "",
+    answer: "",
+    category: "react",
+  });
 
-  const flipCard = () => {
-    setCards(
-      cards.map((card, index) =>
-        index === currentIndex ? { ...card, isFlipped: !card.isFlipped } : card
-      )
-    );
-  };
-
-  const nextCard = () => {
-    setCurrentIndex((prev) => (prev + 1) % cards.length);
-    // Reset flip state when moving to next card
-    setCards(cards.map((card) => ({ ...card, isFlipped: false })));
-  };
-
-  const prevCard = () => {
-    setCurrentIndex((prev) => (prev - 1 + cards.length) % cards.length);
-    // Reset flip state when moving to previous card
-    setCards(cards.map((card) => ({ ...card, isFlipped: false })));
-  };
+  const filteredCards =
+    selectedCategory === "all"
+      ? cards
+      : cards.filter((card) => card.category === selectedCategory);
 
   const handleAddCard = (e) => {
     e.preventDefault();
@@ -56,12 +57,33 @@ const Flashcards = () => {
           id: cards.length + 1,
           question: newCard.question,
           answer: newCard.answer,
+          category: newCard.category,
           isFlipped: false,
         },
       ]);
-      setNewCard({ question: "", answer: "" });
+      setNewCard({ question: "", answer: "", category: "react" });
       setShowForm(false);
     }
+  };
+
+  const flipCard = () => {
+    setCards(
+      cards.map((card, index) =>
+        index === currentIndex ? { ...card, isFlipped: !card.isFlipped } : card
+      )
+    );
+  };
+
+  const nextCard = () => {
+    setCurrentIndex((prev) => (prev + 1) % filteredCards.length);
+    setCards(cards.map((card) => ({ ...card, isFlipped: false })));
+  };
+
+  const prevCard = () => {
+    setCurrentIndex(
+      (prev) => (prev - 1 + filteredCards.length) % filteredCards.length
+    );
+    setCards(cards.map((card) => ({ ...card, isFlipped: false })));
   };
 
   return (
@@ -73,8 +95,43 @@ const Flashcards = () => {
         </button>
       </div>
 
+      <div className="category-filter">
+        <select
+          value={selectedCategory}
+          onChange={(e) => {
+            setSelectedCategory(e.target.value);
+            setCurrentIndex(0);
+          }}
+          className="category-select"
+        >
+          <option value="all">All Categories</option>
+          {Object.entries(CATEGORIES).map(([value, label]) => (
+            <option key={value} value={value}>
+              {label}
+            </option>
+          ))}
+        </select>
+      </div>
+
       {showForm ? (
         <form className="card-form" onSubmit={handleAddCard}>
+          <div className="form-group">
+            <label htmlFor="category">Category:</label>
+            <select
+              id="category"
+              value={newCard.category}
+              onChange={(e) =>
+                setNewCard({ ...newCard, category: e.target.value })
+              }
+              className="category-select"
+            >
+              {Object.entries(CATEGORIES).map(([value, label]) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
+            </select>
+          </div>
           <div className="form-group">
             <label htmlFor="question">Question:</label>
             <textarea
@@ -103,20 +160,26 @@ const Flashcards = () => {
             Add Flashcard
           </button>
         </form>
-      ) : (
+      ) : filteredCards.length > 0 ? (
         <>
           <div className="card-container">
             <div
               className={`card ${
-                cards[currentIndex].isFlipped ? "flipped" : ""
+                filteredCards[currentIndex].isFlipped ? "flipped" : ""
               }`}
               onClick={flipCard}
             >
               <div className="card-front">
-                <p>{cards[currentIndex].question}</p>
+                <div className="category-tag">
+                  {CATEGORIES[filteredCards[currentIndex].category]}
+                </div>
+                <p>{filteredCards[currentIndex].question}</p>
               </div>
               <div className="card-back">
-                <p>{cards[currentIndex].answer}</p>
+                <div className="category-tag">
+                  {CATEGORIES[filteredCards[currentIndex].category]}
+                </div>
+                <p>{filteredCards[currentIndex].answer}</p>
               </div>
             </div>
           </div>
@@ -126,13 +189,15 @@ const Flashcards = () => {
               Previous
             </button>
             <span className="card-counter">
-              {currentIndex + 1} / {cards.length}
+              {currentIndex + 1} / {filteredCards.length}
             </span>
             <button className="control-button" onClick={nextCard}>
               Next
             </button>
           </div>
         </>
+      ) : (
+        <div className="no-cards">No cards found in this category</div>
       )}
     </div>
   );
