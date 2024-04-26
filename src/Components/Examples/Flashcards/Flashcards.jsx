@@ -4,10 +4,10 @@ import "./Flashcards.css";
 
 const Flashcards = () => {
   const [cards, setCards] = useState(initialCards);
-
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showForm, setShowForm] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [editMode, setEditMode] = useState(false);
   const [newCard, setNewCard] = useState({
     question: "",
     answer: "",
@@ -19,21 +19,54 @@ const Flashcards = () => {
       ? cards
       : cards.filter((card) => card.category === selectedCategory);
 
-  const handleAddCard = (e) => {
+  const handleEditCard = () => {
+    const currentCard = filteredCards[currentIndex];
+    setNewCard({
+      id: currentCard.id,
+      question: currentCard.question,
+      answer: currentCard.answer,
+      category: currentCard.category,
+    });
+    setEditMode(true);
+    setShowForm(true);
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (newCard.question.trim() && newCard.answer.trim()) {
-      setCards([
-        ...cards,
-        {
-          id: cards.length + 1,
-          question: newCard.question,
-          answer: newCard.answer,
-          category: newCard.category,
-          isFlipped: false,
-        },
-      ]);
+      if (editMode) {
+        // Update existing card
+        setCards(
+          cards.map((card) =>
+            card.id === newCard.id ? { ...newCard, isFlipped: false } : card
+          )
+        );
+      } else {
+        // Add new card
+        setCards([
+          ...cards,
+          {
+            id: cards.length + 1,
+            question: newCard.question,
+            answer: newCard.answer,
+            category: newCard.category,
+            isFlipped: false,
+          },
+        ]);
+      }
       setNewCard({ question: "", answer: "", category: "react" });
       setShowForm(false);
+      setEditMode(false);
+    }
+  };
+
+  const handleDeleteCard = () => {
+    if (window.confirm("Are you sure you want to delete this card?")) {
+      const newCards = cards.filter(
+        (card) => card.id !== filteredCards[currentIndex].id
+      );
+      setCards(newCards);
+      setCurrentIndex((prev) => (prev > 0 ? prev - 1 : 0));
     }
   };
 
@@ -61,7 +94,14 @@ const Flashcards = () => {
     <div className="flashcards-container">
       <div className="header">
         <h2 className="flashcards-title">React Flashcards</h2>
-        <button className="add-button" onClick={() => setShowForm(!showForm)}>
+        <button
+          className="add-button"
+          onClick={() => {
+            setEditMode(false);
+            setNewCard({ question: "", answer: "", category: "react" });
+            setShowForm(!showForm);
+          }}
+        >
           {showForm ? "Cancel" : "Add Card"}
         </button>
       </div>
@@ -85,7 +125,7 @@ const Flashcards = () => {
       </div>
 
       {showForm ? (
-        <form className="card-form" onSubmit={handleAddCard}>
+        <form className="card-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="category">Category:</label>
             <select
@@ -128,7 +168,7 @@ const Flashcards = () => {
             />
           </div>
           <button type="submit" className="submit-button">
-            Add Flashcard
+            {editMode ? "Update Flashcard" : "Add Flashcard"}
           </button>
         </form>
       ) : filteredCards.length > 0 ? (
@@ -164,6 +204,15 @@ const Flashcards = () => {
             </span>
             <button className="control-button" onClick={nextCard}>
               Next
+            </button>
+          </div>
+
+          <div className="card-actions">
+            <button className="edit-button" onClick={handleEditCard}>
+              Edit Card
+            </button>
+            <button className="delete-button" onClick={handleDeleteCard}>
+              Delete Card
             </button>
           </div>
         </>
