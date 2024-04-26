@@ -15,6 +15,7 @@ const Flashcards = () => {
   });
   const [showOptions, setShowOptions] = useState(false);
   const optionsRef = useRef(null);
+  const [showAnswer, setShowAnswer] = useState(false);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -92,9 +93,15 @@ const Flashcards = () => {
     );
   };
 
+  const toggleAnswer = (e) => {
+    e.stopPropagation();
+    setShowAnswer(!showAnswer);
+  };
+
   const nextCard = () => {
     setCurrentIndex((prev) => (prev + 1) % filteredCards.length);
     setCards(cards.map((card) => ({ ...card, isFlipped: false })));
+    setShowAnswer(false);
   };
 
   const prevCard = () => {
@@ -102,6 +109,7 @@ const Flashcards = () => {
       (prev) => (prev - 1 + filteredCards.length) % filteredCards.length
     );
     setCards(cards.map((card) => ({ ...card, isFlipped: false })));
+    setShowAnswer(false);
   };
 
   return (
@@ -240,6 +248,16 @@ const Flashcards = () => {
                   {CATEGORIES[filteredCards[currentIndex].category]}
                 </div>
                 <p>{filteredCards[currentIndex].question}</p>
+                {showAnswer && (
+                  <div className="answer-preview">
+                    <p className="answer-text">
+                      {filteredCards[currentIndex].answer}
+                    </p>
+                  </div>
+                )}
+                <button className="show-answer-button" onClick={toggleAnswer}>
+                  {showAnswer ? "Hide Answer" : "Show Answer"}
+                </button>
               </div>
               <div className="card-back">
                 <div className="category-tag">
