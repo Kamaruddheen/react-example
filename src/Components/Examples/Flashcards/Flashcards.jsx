@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { CATEGORIES, initialCards } from "./cardData";
 import "./Flashcards.css";
 
@@ -13,6 +13,20 @@ const Flashcards = () => {
     answer: "",
     category: "react",
   });
+  const [showOptions, setShowOptions] = useState(false);
+  const optionsRef = useRef(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (optionsRef.current && !optionsRef.current.contains(event.target)) {
+        setShowOptions(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const filteredCards =
     selectedCategory === "all"
@@ -94,16 +108,57 @@ const Flashcards = () => {
     <div className="flashcards-container">
       <div className="header">
         <h2 className="flashcards-title">React Flashcards</h2>
-        <button
-          className="add-button"
-          onClick={() => {
-            setEditMode(false);
-            setNewCard({ question: "", answer: "", category: "react" });
-            setShowForm(!showForm);
-          }}
-        >
-          {showForm ? "Cancel" : "Add Card"}
-        </button>
+        <div className="options-container" ref={optionsRef}>
+          <button
+            className="options-trigger"
+            onClick={() => setShowOptions(!showOptions)}
+          >
+            <span className="dots">⋮</span>
+          </button>
+
+          {showOptions && (
+            <div className="options-dropdown">
+              <button
+                className="option-item"
+                onClick={() => {
+                  setEditMode(false);
+                  setNewCard({ question: "", answer: "", category: "react" });
+                  setShowForm(!showForm);
+                  setShowOptions(false);
+                }}
+              >
+                <span className="option-icon">+</span>
+                {showForm ? "Cancel" : "Add Card"}
+              </button>
+
+              {!showForm && filteredCards.length > 0 && (
+                <>
+                  <button
+                    className="option-item"
+                    onClick={() => {
+                      handleEditCard();
+                      setShowOptions(false);
+                    }}
+                  >
+                    <span className="option-icon">✎</span>
+                    Edit Card
+                  </button>
+
+                  <button
+                    className="option-item delete"
+                    onClick={() => {
+                      handleDeleteCard();
+                      setShowOptions(false);
+                    }}
+                  >
+                    <span className="option-icon">×</span>
+                    Delete Card
+                  </button>
+                </>
+              )}
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="category-filter">
@@ -204,15 +259,6 @@ const Flashcards = () => {
             </span>
             <button className="control-button" onClick={nextCard}>
               Next
-            </button>
-          </div>
-
-          <div className="card-actions">
-            <button className="edit-button" onClick={handleEditCard}>
-              Edit Card
-            </button>
-            <button className="delete-button" onClick={handleDeleteCard}>
-              Delete Card
             </button>
           </div>
         </>
