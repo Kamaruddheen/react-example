@@ -2,8 +2,13 @@ import React, { useState, useRef, useEffect } from "react";
 import { CATEGORIES, initialCards } from "./cardData";
 import "./Flashcards.css";
 
+const LOCAL_STORAGE_KEY = "flashcards_data";
+
 const Flashcards = () => {
-  const [cards, setCards] = useState(initialCards);
+  const [cards, setCards] = useState(() => {
+    const savedCards = localStorage.getItem(LOCAL_STORAGE_KEY);
+    return savedCards ? JSON.parse(savedCards) : initialCards;
+  });
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showForm, setShowForm] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -17,6 +22,10 @@ const Flashcards = () => {
   const optionsRef = useRef(null);
   const [showAnswer, setShowAnswer] = useState(false);
   const [showTooltip, setShowTooltip] = useState(true);
+
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(cards));
+  }, [cards]);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -119,6 +128,18 @@ const Flashcards = () => {
     flipCard();
   };
 
+  const handleResetCards = () => {
+    if (
+      window.confirm(
+        "Are you sure you want to reset all cards to default? This cannot be undone."
+      )
+    ) {
+      setCards(initialCards);
+      setCurrentIndex(0);
+      setShowOptions(false);
+    }
+  };
+
   return (
     <div className="flashcards-container">
       <div className="header">
@@ -171,6 +192,11 @@ const Flashcards = () => {
                   </button>
                 </>
               )}
+
+              <button className="option-item reset" onClick={handleResetCards}>
+                <span className="option-icon">↺</span>
+                Reset to Default
+              </button>
             </div>
           )}
         </div>

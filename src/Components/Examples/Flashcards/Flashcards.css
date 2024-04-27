@@ -201,3 +201,8 @@
     transform: translate(-50%, 0);
   }
 }
+
+/* Add to your existing options styles */
+.option-item.reset {
+  @apply hover:bg-yellow-600 border-t border-gray-600;
+}
