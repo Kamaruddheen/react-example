@@ -2,6 +2,7 @@ import { Suspense, useMemo } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { routes, categories } from "./config/routes";
 import CategoryLink from "./Components/CategoryLink";
+import HomeButton from "./Components/Main/HomeButton";
 
 // Basics Concepts
 import Welcome from "./Components/Basics/Welcome";
@@ -55,6 +56,7 @@ function App() {
       }}
     >
       <div className="min-h-screen bg-gray-100">
+        <HomeButton />
         <Routes>
           <Route
             path="/"
