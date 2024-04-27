@@ -16,6 +16,7 @@ const Flashcards = () => {
   const [showOptions, setShowOptions] = useState(false);
   const optionsRef = useRef(null);
   const [showAnswer, setShowAnswer] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(true);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -110,6 +111,12 @@ const Flashcards = () => {
     );
     setCards(cards.map((card) => ({ ...card, isFlipped: false })));
     setShowAnswer(false);
+  };
+
+  // Hide tooltip after first flip
+  const handleFirstFlip = () => {
+    setShowTooltip(false);
+    flipCard();
   };
 
   return (
@@ -241,23 +248,16 @@ const Flashcards = () => {
               className={`card ${
                 filteredCards[currentIndex].isFlipped ? "flipped" : ""
               }`}
-              onClick={flipCard}
+              onClick={handleFirstFlip}
             >
               <div className="card-front">
                 <div className="category-tag">
                   {CATEGORIES[filteredCards[currentIndex].category]}
                 </div>
                 <p>{filteredCards[currentIndex].question}</p>
-                {showAnswer && (
-                  <div className="answer-preview">
-                    <p className="answer-text">
-                      {filteredCards[currentIndex].answer}
-                    </p>
-                  </div>
+                {showTooltip && (
+                  <div className="card-tooltip">Click card to view answer</div>
                 )}
-                <button className="show-answer-button" onClick={toggleAnswer}>
-                  {showAnswer ? "Hide Answer" : "Show Answer"}
-                </button>
               </div>
               <div className="card-back">
                 <div className="category-tag">

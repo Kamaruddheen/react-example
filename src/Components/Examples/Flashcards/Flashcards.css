@@ -176,31 +176,28 @@
   }
 }
 
-.show-answer-button {
+/* Add tooltip styles */
+.card-tooltip {
   @apply absolute bottom-4 left-1/2 transform -translate-x-1/2
-    bg-blue-600 text-white py-2 px-4 rounded-lg
-    hover:bg-blue-500 transition-colors duration-200
-    text-sm;
+    bg-gray-800 text-gray-300 py-2 px-4 rounded-lg
+    text-sm border border-gray-600;
+  animation: fadeIn 0.3s ease-out;
+  white-space: nowrap;
 }
 
-.answer-preview {
-  @apply absolute bottom-16 left-0 right-0 
-    bg-gray-800 p-4 rounded-lg mx-4
-    border border-gray-600;
-  animation: fadeIn 0.2s ease-out;
-}
-
-.answer-text {
-  @apply text-gray-300 text-sm !important;
+.card-tooltip::before {
+  content: "";
+  @apply absolute -top-2 left-1/2 transform -translate-x-1/2
+    border-8 border-transparent border-b-gray-800;
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translate(-50%, 10px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate(-50%, 0);
   }
 }
