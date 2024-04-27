@@ -1,3 +1,4 @@
+import { Suspense, useMemo } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { routes, categories } from "./config/routes";
 import CategoryLink from "./Components/CategoryLink";
@@ -20,6 +21,32 @@ import ExpenseTracker from "./Components/Examples/ExpenseTracker/ExpenseTracker"
 import Flashcards from "./Components/Examples/Flashcards/Flashcards";
 
 function App() {
+  const memoizedCategories = useMemo(() => {
+    return Object.entries(categories).map(([categoryKey, category]) => (
+      <div key={categoryKey} className="mb-8">
+        <h2 className="text-2xl font-semibold text-gray-700 mb-4">
+          {category.name}
+        </h2>
+        <nav className="mb-8">
+          <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {routes
+              .filter((route) => route.category === categoryKey)
+              .map((route) => (
+                <li key={route.path}>
+                  <CategoryLink
+                    to={route.path}
+                    title={route.title}
+                    description={route.description}
+                    color={category.color}
+                  />
+                </li>
+              ))}
+          </ul>
+        </nav>
+      </div>
+    ));
+  }, []);
+
   return (
     <BrowserRouter
       future={{
@@ -39,29 +66,7 @@ function App() {
                 </h1>
 
                 {/* Categories Section */}
-                {Object.entries(categories).map(([categoryKey, category]) => (
-                  <div key={categoryKey} className="mb-8">
-                    <h2 className="text-2xl font-semibold text-gray-700 mb-4">
-                      {category.name}
-                    </h2>
-                    <nav className="mb-8">
-                      <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {routes
-                          .filter((route) => route.category === categoryKey)
-                          .map((route) => (
-                            <li key={route.path}>
-                              <CategoryLink
-                                to={route.path}
-                                title={route.title}
-                                description={route.description}
-                                color={category.color}
-                              />
-                            </li>
-                          ))}
-                      </ul>
-                    </nav>
-                  </div>
-                ))}
+                {memoizedCategories}
               </div>
             }
           />
@@ -72,9 +77,11 @@ function App() {
               key={route.path}
               path={route.path}
               element={
-                <div className="min-h-screen bg-gray-100 p-8">
-                  {getRouteElement(route.path)}
-                </div>
+                <Suspense fallback={<div>Loading...</div>}>
+                  <div className="min-h-screen bg-gray-100 p-8">
+                    {getRouteElement(route.path)}
+                  </div>
+                </Suspense>
               }
             />
           ))}
@@ -86,36 +93,24 @@ function App() {
 
 // Helper function to return the correct element based on route
 function getRouteElement(path) {
-  switch (path) {
-    case "/props":
-      return <Welcome program="Data Science" name="Max" />;
-    case "/hoc":
-      return (
-        <BorderWrapper color="red">
-          <Welcome program="Data Science" name="Max" />
-        </BorderWrapper>
-      );
-    case "/state-class-components":
-      return <Counter />;
-    case "/hooks":
-      return <CounterHooks />;
-    case "/searching":
-      return <InputBox />;
-    case "/calculator":
-      return <Calculator />;
-    case "/advanced-calculator":
-      return <AdvancedCalculator />;
-    case "/random-quote":
-      return <RandomQuoteGenerator />;
-    case "/tip-calculator":
-      return <TipCalculator />;
-    case "/expense-tracker":
-      return <ExpenseTracker />;
-    case "/flashcards":
-      return <Flashcards />;
-    default:
-      return null;
-  }
+  const routeMap = {
+    "/props": <Welcome program="Data Science" name="Max" />,
+    "/hoc": (
+      <BorderWrapper color="red">
+        <Welcome program="Data Science" name="Max" />
+      </BorderWrapper>
+    ),
+    "/state-class-components": <Counter />,
+    "/hooks": <CounterHooks />,
+    "/searching": <InputBox />,
+    "/calculator": <Calculator />,
+    "/advanced-calculator": <AdvancedCalculator />,
+    "/random-quote": <RandomQuoteGenerator />,
+    "/tip-calculator": <TipCalculator />,
+    "/expense-tracker": <ExpenseTracker />,
+    "/flashcards": <Flashcards />,
+  };
+  return routeMap[path] || null;
 }
 
 export default App;
