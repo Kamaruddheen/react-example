@@ -65,6 +65,12 @@ export const routes = [
     description: "Interactive Learning Flashcards",
     category: "examples",
   },
+  {
+    path: "/photo-gallery",
+    title: "Photo Gallery",
+    description: "Browse through a collection of photos",
+    category: "examples", 
+  },
 ];
 
 export const categories = {

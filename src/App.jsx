@@ -20,6 +20,7 @@ import RandomQuoteGenerator from "./Components/Examples/RandomQuoteGenerator/Ran
 import TipCalculator from "./Components/Examples/TipCalculator/TipCalculator";
 import ExpenseTracker from "./Components/Examples/ExpenseTracker/ExpenseTracker";
 import Flashcards from "./Components/Examples/Flashcards/Flashcards";
+import PhotoGallery from "./Components/Examples/PhotoGallery/PhotoGallery";
 
 function App() {
   const memoizedCategories = useMemo(() => {
@@ -111,6 +112,7 @@ function getRouteElement(path) {
     "/tip-calculator": <TipCalculator />,
     "/expense-tracker": <ExpenseTracker />,
     "/flashcards": <Flashcards />,
+    "/photo-gallery": <PhotoGallery photos={[]} />,
   };
   return routeMap[path] || null;
 }
