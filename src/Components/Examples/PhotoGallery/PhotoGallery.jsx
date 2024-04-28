@@ -1,7 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-const PhotoGallery = ({ photos }) => {
+const PhotoGallery = () => {
   const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [photos, setPhotos] = useState([]);
+
+  useEffect(() => {
+    const fetchPhotos = async () => {
+      try {
+        const response = await fetch("https://picsum.photos/v2/list?limit=10");
+        const data = await response.json();
+        setPhotos(data);
+      } catch (error) {
+        console.error("Error fetching images:", error);
+      }
+    };
+
+    fetchPhotos();
+  }, []);
 
   // Function to handle photo click and set the selected photo
   const handlePhotoClick = (photo) => {
@@ -19,11 +34,15 @@ const PhotoGallery = ({ photos }) => {
             onClick={() => handlePhotoClick(photo)}
             className="relative rounded-lg overflow-hidden cursor-pointer shadow-md transform hover:scale-105 transition duration-300 ease-in-out"
           >
-            <img src={photo.url} alt={photo.title} className="w-full h-auto" />
+            <img
+              src={photo.download_url}
+              alt={photo.author}
+              className="w-full h-auto"
+            />
 
-            {/* Display the photo title as an overlay */}
+            {/* Display the photo author as an overlay */}
             <div className="absolute bottom-0 left-0 p-2 bg-black bg-opacity-50 text-white font-semibold">
-              {photo.title}
+              {photo.author}
             </div>
           </div>
         ))}
@@ -37,8 +56,8 @@ const PhotoGallery = ({ photos }) => {
         >
           <div className="bg-white p-4 rounded-lg shadow-lg relative">
             <img
-              src={selectedPhoto.url}
-              alt={selectedPhoto.title}
+              src={selectedPhoto.download_url}
+              alt={selectedPhoto.author}
               className="w-full h-auto max-h-96"
             />
 

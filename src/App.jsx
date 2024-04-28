@@ -112,7 +112,7 @@ function getRouteElement(path) {
     "/tip-calculator": <TipCalculator />,
     "/expense-tracker": <ExpenseTracker />,
     "/flashcards": <Flashcards />,
-    "/photo-gallery": <PhotoGallery photos={[]} />,
+    "/photo-gallery": <PhotoGallery />,
   };
   return routeMap[path] || null;
 }
