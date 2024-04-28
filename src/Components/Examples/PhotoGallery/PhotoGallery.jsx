@@ -1,4 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
+
+const PhotoItem = ({ photo, handlePhotoClick }) => (
+  <div
+    onClick={() => handlePhotoClick(photo)}
+    className="relative rounded-lg overflow-hidden cursor-pointer shadow-md transform hover:scale-105 transition duration-300 ease-in-out"
+  >
+    <img
+      src={photo.download_url}
+      alt={photo.author}
+      className="w-full h-auto"
+    />
+    <div className="absolute bottom-0 left-0 p-2 bg-black bg-opacity-50 text-white font-semibold">
+      {photo.author}
+    </div>
+  </div>
+);
 
 const PhotoGallery = () => {
   const [selectedPhoto, setSelectedPhoto] = useState(null);
@@ -29,22 +45,11 @@ const PhotoGallery = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {photos.map((photo) => (
-          <div
+          <PhotoItem
             key={photo.id}
-            onClick={() => handlePhotoClick(photo)}
-            className="relative rounded-lg overflow-hidden cursor-pointer shadow-md transform hover:scale-105 transition duration-300 ease-in-out"
-          >
-            <img
-              src={photo.download_url}
-              alt={photo.author}
-              className="w-full h-auto"
-            />
-
-            {/* Display the photo author as an overlay */}
-            <div className="absolute bottom-0 left-0 p-2 bg-black bg-opacity-50 text-white font-semibold">
-              {photo.author}
-            </div>
-          </div>
+            photo={photo}
+            handlePhotoClick={handlePhotoClick}
+          />
         ))}
       </div>
 
@@ -64,6 +69,7 @@ const PhotoGallery = () => {
             <span
               className="absolute top-2 right-2 text-white cursor-pointer"
               onClick={() => setSelectedPhoto(null)} // Close the modal
+              aria-label="Close"
             >
               &times;
             </span>
