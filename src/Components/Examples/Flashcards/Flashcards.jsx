@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { CATEGORIES, initialCards } from "./cardData";
 import "./Flashcards.css";
+import Tooltip from "../../Main/Tooltip";
+import { IoMdInformationCircleOutline } from "react-icons/io";
 
 const LOCAL_STORAGE_KEY = "flashcards_data";
 
@@ -143,7 +145,12 @@ const Flashcards = () => {
   return (
     <div className="flashcards-container">
       <div className="header">
-        <h2 className="flashcards-title">React Flashcards</h2>
+        <h2 className="flashcards-title">
+          React Flashcards{"  "}
+          <Tooltip message="Click the question to view the answer">
+            <IoMdInformationCircleOutline size={24} />
+          </Tooltip>
+        </h2>
         <div className="options-container" ref={optionsRef}>
           <button
             className="options-trigger"
