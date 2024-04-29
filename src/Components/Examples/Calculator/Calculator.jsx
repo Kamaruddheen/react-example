@@ -6,59 +6,72 @@ class Calculator extends Component {
     display: "0",
     firstNumber: null,
     operation: null,
-    newNumberStarted: false,
+    isNewNumber: false,
   };
 
   handleNumber = (number) => {
-    const { display, newNumberStarted } = this.state;
+    this.setState((prevState) => {
+      const { display, isNewNumber } = prevState;
 
-    if (display === "0" || newNumberStarted) {
-      this.setState({
-        display: number.toString(),
-        newNumberStarted: false,
-      });
-    } else {
-      this.setState({
-        display: display + number,
-      });
-    }
-  };
-
-  handleOperation = (op) => {
-    this.setState({
-      firstNumber: parseFloat(this.state.display),
-      operation: op,
-      newNumberStarted: true,
+      if (display === "0" || isNewNumber) {
+        return {
+          display: number.toString(),
+          isNewNumber: false,
+        };
+      } else {
+        return {
+          display: display + number,
+        };
+      }
     });
   };
 
+  handleOperation = (op) => {
+    this.setState((prevState) => ({
+      firstNumber: parseFloat(prevState.display),
+      operation: op,
+      isNewNumber: true,
+    }));
+  };
+
   handleEqual = () => {
-    const { firstNumber, operation, display } = this.state;
-    const secondNumber = parseFloat(display);
-    let result;
+    this.setState((prevState) => {
+      const { firstNumber, operation, display } = prevState;
+      const secondNumber = parseFloat(display);
+      let result;
 
-    switch (operation) {
-      case "+":
-        result = firstNumber + secondNumber;
-        break;
-      case "-":
-        result = firstNumber - secondNumber;
-        break;
-      case "*":
-        result = firstNumber * secondNumber;
-        break;
-      case "/":
-        result = firstNumber / secondNumber;
-        break;
-      default:
-        return;
-    }
+      const ADD = "+";
+      const SUBTRACT = "-";
+      const MULTIPLY = "*";
+      const DIVIDE = "/";
 
-    this.setState({
-      display: result.toString(),
-      firstNumber: null,
-      operation: null,
-      newNumberStarted: true,
+      switch (operation) {
+        case ADD:
+          result = firstNumber + secondNumber;
+          break;
+        case SUBTRACT:
+          result = firstNumber - secondNumber;
+          break;
+        case MULTIPLY:
+          result = firstNumber * secondNumber;
+          break;
+        case DIVIDE:
+          if (secondNumber === 0) {
+            alert("Error: Division by zero");
+            return;
+          }
+          result = firstNumber / secondNumber;
+          break;
+        default:
+          return;
+      }
+
+      return {
+        display: result.toString(),
+        firstNumber: null,
+        operation: null,
+        isNewNumber: true,
+      };
     });
   };
 
@@ -67,9 +80,17 @@ class Calculator extends Component {
       display: "0",
       firstNumber: null,
       operation: null,
-      newNumberStarted: false,
+      isNewNumber: false,
     });
   };
+
+  renderButton(number, className = "btn") {
+    return (
+      <button onClick={() => this.handleNumber(number)} className={className}>
+        {number}
+      </button>
+    );
+  }
 
   render() {
     return (
@@ -79,16 +100,9 @@ class Calculator extends Component {
         </div>
 
         <div className="calculator-grid">
-          {/* Numbers */}
-          <button onClick={() => this.handleNumber(7)} className="btn">
-            7
-          </button>
-          <button onClick={() => this.handleNumber(8)} className="btn">
-            8
-          </button>
-          <button onClick={() => this.handleNumber(9)} className="btn">
-            9
-          </button>
+          {this.renderButton(7)}
+          {this.renderButton(8)}
+          {this.renderButton(9)}
           <button
             onClick={() => this.handleOperation("/")}
             className="btn-orange"
@@ -96,15 +110,9 @@ class Calculator extends Component {
             /
           </button>
 
-          <button onClick={() => this.handleNumber(4)} className="btn">
-            4
-          </button>
-          <button onClick={() => this.handleNumber(5)} className="btn">
-            5
-          </button>
-          <button onClick={() => this.handleNumber(6)} className="btn">
-            6
-          </button>
+          {this.renderButton(4)}
+          {this.renderButton(5)}
+          {this.renderButton(6)}
           <button
             onClick={() => this.handleOperation("*")}
             className="btn-orange"
@@ -112,15 +120,9 @@ class Calculator extends Component {
             ×
           </button>
 
-          <button onClick={() => this.handleNumber(1)} className="btn">
-            1
-          </button>
-          <button onClick={() => this.handleNumber(2)} className="btn">
-            2
-          </button>
-          <button onClick={() => this.handleNumber(3)} className="btn">
-            3
-          </button>
+          {this.renderButton(1)}
+          {this.renderButton(2)}
+          {this.renderButton(3)}
           <button
             onClick={() => this.handleOperation("-")}
             className="btn-orange"
@@ -128,12 +130,7 @@ class Calculator extends Component {
             -
           </button>
 
-          <button
-            onClick={() => this.handleNumber(0)}
-            className="btn btn-span-2"
-          >
-            0
-          </button>
+          {this.renderButton(0, "btn btn-span-2")}
           <button onClick={this.handleEqual} className="btn">
             =
           </button>
