@@ -1,4 +1,5 @@
-import React, { useState, useEffect, memo } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { FaDownload } from "react-icons/fa";
 
 const PhotoItem = ({ photo, handlePhotoClick }) => (
   <div
@@ -19,6 +20,7 @@ const PhotoItem = ({ photo, handlePhotoClick }) => (
 const PhotoGallery = () => {
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [photos, setPhotos] = useState([]);
+  const downloadLinkRef = useRef(null); // Ref for the download link
 
   useEffect(() => {
     const fetchPhotos = async () => {
@@ -39,43 +41,50 @@ const PhotoGallery = () => {
     setSelectedPhoto(photo);
   };
 
+  const downloadPhoto = (url, author) => {
+    // Set the href and download attributes of the link ref
+    downloadLinkRef.current.href = url;
+    downloadLinkRef.current.download = `${author}-${Date.now()}.jpg`;
+
+    // Programmatically trigger a click on the link
+    downloadLinkRef.current.click();
+  };
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-4">Photo Gallery</h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {photos.map((photo) => (
-          <PhotoItem
+          <div
             key={photo.id}
-            photo={photo}
-            handlePhotoClick={handlePhotoClick}
-          />
+            className="relative rounded-lg overflow-hidden cursor-pointer shadow-md transform hover:scale-105 transition duration-300 ease-in-out"
+          >
+            <img
+              src={photo.download_url}
+              alt={photo.author}
+              className="w-full h-auto"
+              onClick={() => handlePhotoClick(photo)}
+            />
+
+            <div className="absolute bottom-0 left-0 p-2 bg-black bg-opacity-50 text-white font-semibold">
+              {photo.author}
+            </div>
+
+            <button
+              onClick={() => downloadPhoto(photo.download_url, "image")}
+              className="absolute top-2 right-2 p-2 bg-blue-500 text-white rounded-full shadow-md hover:bg-blue-600 focus:outline-none"
+            >
+              <FaDownload />
+            </button>
+          </div>
         ))}
       </div>
 
-      {/* Display the selected photo in a modal */}
-      {selectedPhoto && (
-        <div
-          className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-75"
-          onClick={() => setSelectedPhoto(null)} // Close the modal on click outside
-        >
-          <div className="bg-white p-4 rounded-lg shadow-lg relative">
-            <img
-              src={selectedPhoto.download_url}
-              alt={selectedPhoto.author}
-              className="w-full h-auto max-h-96"
-            />
+      {/* Invisible download link */}
+      <a ref={downloadLinkRef} style={{ display: "none" }} />
 
-            <span
-              className="absolute top-2 right-2 text-white cursor-pointer"
-              onClick={() => setSelectedPhoto(null)} // Close the modal
-              aria-label="Close"
-            >
-              &times;
-            </span>
-          </div>
-        </div>
-      )}
+      {/* ... rest of your code ... */}
     </div>
   );
 };
