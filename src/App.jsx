@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import Search from "./Components/TransitionExample/Search";
+import DeferredValueExample from "./Components/DeferredValueExample/DeferredValueExample";
 
 function App() {
   // const [isCounterVisible, setVisible] = useState(true)
@@ -19,7 +19,8 @@ function App() {
       {/* <InputBox /> */}
       {/* <InputHooks />  */} {/* function based approach with Hooks */}
       {/* <ReducerExample2 /> */}
-      <Search />
+      {/* <Search /> */}
+      <DeferredValueExample />
     </>
   );
 }
