@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import ReducerExample from "./Components/ReducerExample/ReducerExample";
+import ReducerExample2 from "./Components/ReducerExample/ReducerExample2";
 
 function App() {
   // const [isCounterVisible, setVisible] = useState(true)
@@ -18,7 +18,7 @@ function App() {
       {/* <CounterHooks /> */}
       {/* <InputBox /> */}
       {/* <InputHooks />  */} {/* function based approach with Hooks */}
-      <ReducerExample />
+      <ReducerExample2 />
     </>
   );
 }
