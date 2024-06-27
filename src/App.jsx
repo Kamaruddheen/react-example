@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import ReducerExample2 from "./Components/ReducerExample/ReducerExample2";
+import Search from "./Components/TransitionExample/Search";
 
 function App() {
   // const [isCounterVisible, setVisible] = useState(true)
@@ -18,7 +18,8 @@ function App() {
       {/* <CounterHooks /> */}
       {/* <InputBox /> */}
       {/* <InputHooks />  */} {/* function based approach with Hooks */}
-      <ReducerExample2 />
+      {/* <ReducerExample2 /> */}
+      <Search />
     </>
   );
 }
